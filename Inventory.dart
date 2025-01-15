@@ -94,6 +94,7 @@ void inventory(String? username) {
       };
       //________________________________________
       myInventory.add(newItem);
+
       try {
         String updatedJsonString = jsonEncode(myInventory);
         file.writeAsStringSync(updatedJsonString);
@@ -101,8 +102,7 @@ void inventory(String? username) {
       } catch (e) {
         print('An error occurred while writing to the file: $e');
       }
-
-//-----------------------------------------
+      //-----------------------------------------
       // Update total amount after adding new item
       totalAmt += ccQty * ccRate;
 
@@ -116,6 +116,15 @@ void inventory(String? username) {
           item['email'] == username && item['cName'].toUpperCase() == sAns);
 
       print("$sAns has been removed from your inventory.");
+      //-----------------------------------------------------
+      try {
+        String updatedJsonString = jsonEncode(myInventory);
+        file.writeAsStringSync(updatedJsonString);
+        print('Data successfully written to myInventory.json');
+      } catch (e) {
+        print('An error occurred while writing to the file: $e');
+      }
+      //-------------------------------------------------------
     } else if (bsAns == 'E') {
       continueLoop = false; // Exit the loop
     } else {
