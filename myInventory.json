@@ -1,0 +1,38 @@
+[
+    {
+        "email": "shahzad@gmail.com",
+        "cName": "HUBCO",
+        "cQty": 100,
+        "cRate": 15.5
+    },
+    {
+        "email": "shahzad@gmail.com",
+        "cName": "PSO",
+        "cQty": 100,
+        "cRate": 12.5
+    },
+    {
+        "email": "shahzad@gmail.com",
+        "cName": "KAPCO",
+        "cQty": 100,
+        "cRate": 50.5
+    },
+    {
+        "email": "arif@gmail.com",
+        "cName": "KAPCO",
+        "cQty": 100,
+        "cRate": 50.5
+    },
+    {
+        "email": "plhc@gmail.com",
+        "cName": "KAPCO",
+        "cQty": 100,
+        "cRate": 50.5
+    },
+    {
+        "email": "plhc@gmail.com",
+        "cName": "KAPCO",
+        "cQty": 100,
+        "cRate": 50.5
+    }
+]
