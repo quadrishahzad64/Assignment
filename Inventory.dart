@@ -13,7 +13,7 @@ void inventory(String? username) {
   File file = File('myInventory.json');
   String jsonString = file.readAsStringSync();
   List<Map<String, dynamic>> myInventory =
-  List<Map<String, dynamic>>.from(jsonDecode(jsonString));
+      List<Map<String, dynamic>>.from(jsonDecode(jsonString));
 
   //--------------------------------------------------------
   bool continueLoop = true;
@@ -92,9 +92,17 @@ void inventory(String? username) {
         'cQty': ccQty,
         'cRate': ccRate,
       };
-
+      //________________________________________
       myInventory.add(newItem);
+      try {
+        String updatedJsonString = jsonEncode(myInventory);
+        file.writeAsStringSync(updatedJsonString);
+        print('Data successfully written to myInventory.json');
+      } catch (e) {
+        print('An error occurred while writing to the file: $e');
+      }
 
+//-----------------------------------------
       // Update total amount after adding new item
       totalAmt += ccQty * ccRate;
 
