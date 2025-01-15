@@ -7,15 +7,13 @@ void inventory(String? username) {
     print("No user logged in. Cannot access inventory.");
     return;
   }
-  // Define the inventory list with proper values
-  //------------------------------------------------------
 
+  // Define the inventory list with proper values
   File file = File('myInventory.json');
   String jsonString = file.readAsStringSync();
   List<Map<String, dynamic>> myInventory =
       List<Map<String, dynamic>>.from(jsonDecode(jsonString));
 
-  //--------------------------------------------------------
   bool continueLoop = true;
 
   while (continueLoop) {
@@ -29,7 +27,7 @@ void inventory(String? username) {
         double cAmt = item['cQty'] * item['cRate'];
         print("=============================================================");
         print(
-            "Item: ${item['cName']}, Quantity: ${item['cQty']}, Rate: ${item['cRate']}, Amount: \$${cAmt}");
+            "Item: ${item['cName']}, Quantity: ${item['cQty']}, Rate: ${item['cRate']}, Amount: ${cAmt}");
         print("=============================================================");
 
         totalQty += item['cQty'];
@@ -39,7 +37,7 @@ void inventory(String? username) {
 
     // Print the totals
     print("Total Quantity: $totalQty");
-    print("Total Amount:   ${totalAmt}");
+    print("Total Amount:   \$${totalAmt}");
 
     print(
         "******************************************************************************");
@@ -60,7 +58,6 @@ void inventory(String? username) {
 
         continue;
       }
-
       print("Adding new inventory item for $username:");
 
       print("Enter Company Name: ");
@@ -73,14 +70,14 @@ void inventory(String? username) {
       print("Enter Quantity: ");
       double ccQty = double.tryParse(stdin.readLineSync() ?? '') ?? 0;
 
-      while (ccQty == 0) {
+      while (ccQty <= 0) {
         print("Enter Quantity: ");
         ccQty = double.tryParse(stdin.readLineSync() ?? '') ?? 0;
       }
 
       print("Enter Rate: ");
       double ccRate = double.tryParse(stdin.readLineSync() ?? '') ?? 0;
-      while (ccRate == 0) {
+      while (ccRate <= 0) {
         print("Enter Rate: ");
         ccRate = double.tryParse(stdin.readLineSync() ?? '') ?? 0;
       }
@@ -92,7 +89,7 @@ void inventory(String? username) {
         'cQty': ccQty,
         'cRate': ccRate,
       };
-      //________________________________________
+
       myInventory.add(newItem);
 
       try {
@@ -102,12 +99,16 @@ void inventory(String? username) {
       } catch (e) {
         print('An error occurred while writing to the file: $e');
       }
-      //-----------------------------------------
+
       // Update total amount after adding new item
       totalAmt += ccQty * ccRate;
 
       print("New inventory item added successfully!");
     } else if (bsAns == 'S') {
+      if (totalQty == 0) {
+        print("You dont have any scrip to Sale!");
+        continue;
+      }
       print("Which item do you want to Sale? Enter Name of Company:");
 
       String sAns = stdin.readLineSync()!.toUpperCase();
@@ -116,7 +117,7 @@ void inventory(String? username) {
           item['email'] == username && item['cName'].toUpperCase() == sAns);
 
       print("$sAns has been removed from your inventory.");
-      //-----------------------------------------------------
+
       try {
         String updatedJsonString = jsonEncode(myInventory);
         file.writeAsStringSync(updatedJsonString);
@@ -124,7 +125,6 @@ void inventory(String? username) {
       } catch (e) {
         print('An error occurred while writing to the file: $e');
       }
-      //-------------------------------------------------------
     } else if (bsAns == 'E') {
       continueLoop = false; // Exit the loop
     } else {
@@ -137,5 +137,11 @@ void main() {
   List<Map<String, dynamic>> clients = [];
 
   String? username = authenticateUser(clients);
-  inventory(username);
+
+  // Only enter inventory if the user is authenticated
+  if (username != null) {
+    inventory(username);
+  } else {
+    print("Authentication failed. Exiting program.");
+  }
 }
