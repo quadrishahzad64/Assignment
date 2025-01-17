@@ -7,11 +7,11 @@ void main() {
   String jsonString = file.readAsStringSync();
   List<Map<String, dynamic>> clients =
       List<Map<String, dynamic>>.from(jsonDecode(jsonString));
-  print("===========================================");
-  print("   Welcome to Stock Trading Platform       ");
   print("============================================");
-  print("                                             ");
-  print("                                             ");
+  print("   Welcome to Stock Trading Platform        ");
+  print("============================================");
+  print("                                            ");
+  print("                                            ");
   print("============================================");
   print(".........We Entertain Following.............");
   print("============================================");
